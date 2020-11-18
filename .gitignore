@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /example/todoapp/node_modules
+/example/todoapp/build
 #/.pnp
 #.pnp.js
 

@@ -1,10 +1,44 @@
+import React from 'react';
 import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
+  const [list, setList] = React.useState([
+    {
+      id: 1,
+      title: '두부 사기',
+    },
+    {
+      id: 2,
+      title: '방청소',
+    },
+    {
+      id: 3,
+      title: '공부',
+    },
+    {
+      id: 4,
+      title: '자전거타기',
+    },
+  ]);
+  const [background, setColor] = React.useState('blue');
+
+  /**
+   * 리스트 추가함수
+   * --
+   */
+  const handleAddList = () => {
+    const newObject = {
+      id: list.lenght < 1 ? 1 : list[list.length - 1].id + 1,
+      title: 'new title',
+    };
+    setList([...list, newObject]);
+  };
+
+  /* RENDER */
   return (
     <div>
-      <Navbar />
+      <Navbar background={background} />
 
       {/* Form */}
       <form className="form">
@@ -18,9 +52,10 @@ function App() {
           </div>
           <div className="col-3">
             <button
-              type="submit"
+              type="button"
               className="btn btn-primary mb-2"
-              style={{ width: '100%' }}
+              style={{ width: '100%', background: background }}
+              onClick={() => handleAddList()}
             >
               Submit
             </button>
@@ -31,18 +66,11 @@ function App() {
       {/* List */}
       <div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <input type="checkbox" /> 두부 사기{' '}
-          </li>
-          <li class="list-group-item">
-            <input type="checkbox" /> 방청소
-          </li>
-          <li class="list-group-item">
-            <input type="checkbox" /> 공부하기
-          </li>
-          <li class="list-group-item">
-            <input type="checkbox" /> 숙제하기
-          </li>
+          {list.map((item) => (
+            <li class="list-group-item">
+              <input type="checkbox" /> {item.title}{' '}
+            </li>
+          ))}
         </ul>
       </div>
 
