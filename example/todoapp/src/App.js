@@ -22,17 +22,31 @@ function App() {
     },
   ]);
   const [background, setColor] = React.useState('blue');
+  const [newTitle, setNewTitle] = React.useState('');
 
   /**
    * 리스트 추가함수
    * --
    */
   const handleAddList = () => {
+    if (!newTitle) {
+      alert('내용을 입력해 주세요');
+      return;
+    }
     const newObject = {
       id: list.lenght < 1 ? 1 : list[list.length - 1].id + 1,
-      title: 'new title',
+      title: newTitle,
     };
     setList([...list, newObject]);
+    setNewTitle('');
+  };
+
+  /**
+   * 할일 텍스트 변경 함수
+   * --
+   */
+  const handleChangeNewTitle = (event) => {
+    setNewTitle(event.target.value);
   };
 
   /* RENDER */
@@ -47,7 +61,9 @@ function App() {
             <input
               type="text"
               className="form-control mb-2"
-              placeholder="To do"
+              placeholder="할 일"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
             />
           </div>
           <div className="col-3">
