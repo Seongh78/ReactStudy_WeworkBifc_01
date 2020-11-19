@@ -4,6 +4,8 @@
 /node_modules
 /example/todoapp/node_modules
 /example/todoapp/build
+/example/todoappbackend/node_modules
+/example/todoappbackend/build
 #/.pnp
 #.pnp.js
 

@@ -23,6 +23,7 @@ function App() {
   ]);
   const [background, setColor] = React.useState('blue');
   const [newTitle, setNewTitle] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
 
   /**
    * 리스트 추가함수
@@ -48,6 +49,29 @@ function App() {
   const handleChangeNewTitle = (event) => {
     setNewTitle(event.target.value);
   };
+
+  /**
+   * Hook
+   * --
+   */
+  React.useEffect(() => {
+    const handleGetTodos = () => {
+      fetch('https://jsonplaceholder.typicode.com/todos')
+        .then((response) => response.json())
+        .then((data) => {
+          setList(data.slice(0, 5));
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
+        });
+    };
+
+    handleGetTodos();
+
+    return () => {
+      console.log('안녕');
+    };
+  }, []);
 
   /* RENDER */
   return (
@@ -80,15 +104,21 @@ function App() {
       </form>
 
       {/* List */}
-      <div>
-        <ul class="list-group list-group-flush">
-          {list.map((item) => (
-            <li class="list-group-item">
-              <input type="checkbox" /> {item.title}{' '}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {loading === true ? (
+        <h1>Loading....</h1>
+      ) : list.length < 1 ? (
+        <h1>데이터가 없어요ㅠㅠ</h1>
+      ) : (
+        <div>
+          <ul class="list-group list-group-flush">
+            {list.map((item) => (
+              <li class="list-group-item">
+                <input type="checkbox" /> {item.title}{' '}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Delete Btn */}
       <div className="foot">
